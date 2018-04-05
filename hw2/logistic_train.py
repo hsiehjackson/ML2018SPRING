@@ -8,7 +8,7 @@ from numpy.linalg import inv
 
 iterate = 30000
 l_r = 0.1
-lamda = 0.1
+lamda = 1
 
 def readfile(n,init):
 	data = []
@@ -52,7 +52,12 @@ def feature(x):
 	x5 = x[:,[80]]**2
 	x6 = x[:,[0]]**3
 	x7 = x[:,[80]]**3
-	x = np.concatenate((x,x2,x1,x3,x4,x5,x6,x7),axis = 1)
+	x8 = x[:,[10]]**3
+	x9= x[:,[78]]**3
+	x10 = x[:,[79]]**3
+	x11 = x[:,[0]]**4
+	x12 = x[:,[80]]**4
+	x = np.concatenate((x,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12),axis = 1)
 	return x
 
 def feature_scailing(x1,x2):
