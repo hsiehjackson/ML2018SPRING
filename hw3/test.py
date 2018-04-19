@@ -43,8 +43,6 @@ def main():
 	result = 0.0
 	model = load_model(argv[3])
 	result = model.predict(x_test, batch_size = BATCH, verbose = 1)
-	trick = np.load('result.npy')
-	result = result + trick;
 	pred = np.argmax(result,axis=-1)
 	writefile(argv[2],pred)
 
