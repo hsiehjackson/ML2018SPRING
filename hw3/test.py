@@ -2,13 +2,13 @@ import numpy as np
 import csv
 from sys import argv
 from keras.models import load_model
-
+'''
 import tensorflow as tf
 from keras.backend.tensorflow_backend import set_session
 config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.5
+config.gpu_options.per_process_gpu_memory_fraction = 0.3
 set_session(tf.Session(config=config))
-
+'''
 np.set_printoptions(precision = 6, suppress = True)
 
 SHAPE = 48
@@ -41,9 +41,10 @@ def main():
 	#normal = np.load(argv[3])
 	#x_test = (x_test - normal[0])/(normal[1]+1e-20)
 	result = 0.0
-	for mlfile in argv[3:]:
-		model = load_model(mlfile)
-		result += model.predict(x_test, batch_size = BATCH, verbose = 1)
+	model = load_model(argv[3])
+	result = model.predict(x_test, batch_size = BATCH, verbose = 1)
+	trick = np.load('result.npy')
+	result = result + trick;
 	pred = np.argmax(result,axis=-1)
 	writefile(argv[2],pred)
 
