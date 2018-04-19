@@ -2,13 +2,13 @@ import numpy as np
 import csv
 from sys import argv
 from keras.models import load_model
-'''
+
 import tensorflow as tf
 from keras.backend.tensorflow_backend import set_session
 config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.3
+config.gpu_options.per_process_gpu_memory_fraction = 0.5
 set_session(tf.Session(config=config))
-'''
+
 np.set_printoptions(precision = 6, suppress = True)
 
 SHAPE = 48
