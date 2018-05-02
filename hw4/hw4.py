@@ -3,7 +3,6 @@ import csv
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
 
 
 
@@ -21,7 +20,6 @@ def main():
 	#pic = pic.astype('float32') / 255.
 
 	pca = PCA(n_components=400,whiten=True).fit_transform(pic)
-	X_embedded = TSNE(n_components=2).fit_transform(pca)
 	kmeans = KMeans(n_clusters=2,random_state=0).fit(pca)
 
 	readfile = open(argv[2],'r')
