@@ -3,6 +3,8 @@ import csv
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+from keras.models import Model, load_model
+
 
 
 
@@ -17,10 +19,18 @@ set_session(tf.Session(config=config))
 def main():
 	
 	pic = np.load(argv[1])
-	#pic = pic.astype('float32') / 255.
-
-	pca = PCA(n_components=400,whiten=True).fit_transform(pic)
-	kmeans = KMeans(n_clusters=2,random_state=0).fit(pca)
+	pic = pic.astype('float32') / 255.
+	
+	aencoder = load_model('model.h5')
+	IP = aencoder.input
+	encode = (aencoder.layers[1])(IP)
+	encode = (aencoder.layers[2])(encode)
+	encode = (aencoder.layers[3])(encode)
+	encoder = Model(IP,encode)
+	encoded_imgs = encoder.predict(pic)
+	#pca = PCA(n_components=400,whiten=True).fit_transform(pic)
+	encoded_imgs = encoded_imgs.reshape(encoded_imgs.shape[0],-1)
+	kmeans = KMeans(n_clusters=2, random_state=0).fit(encoded_imgs)	
 
 	readfile = open(argv[2],'r')
 	outfile = open(argv[3],'w+')
