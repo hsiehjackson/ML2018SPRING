@@ -3,35 +3,17 @@ import csv
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-#from keras.models import Model, load_model
 
 
 
-
-'''
-import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
-config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.3
-set_session(tf.Session(config=config))
-'''
 
 def main():
 	
 	pic = np.load(argv[1])
 
 	pic = pic.astype('float32') / 255.
-	'''
-	aencoder = load_model('autoencoder.h5')
-	IP = aencoder.input
-	encode = (aencoder.layers[1])(IP)
-	encode = (aencoder.layers[2])(encode)
-	encode = (aencoder.layers[3])(encode)
-	encoder = Model(IP,encode)
-	encoded_imgs = encoder.predict(pic)
-	'''
+
 	pca = PCA(n_components=400,whiten=True,svd_solver="full",random_state=0).fit_transform(pic)
-	#encoded_imgs = encoded_imgs.reshape(encoded_imgs.shape[0],-1)
 	kmeans = KMeans(n_clusters=2, random_state=0).fit(pca)	
 
 	readfile = open(argv[2],'r')
