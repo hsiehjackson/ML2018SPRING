@@ -1,0 +1,1 @@
+python3 trainhw5.py $1 $2
