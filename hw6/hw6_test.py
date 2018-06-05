@@ -82,7 +82,6 @@ def readfile(moviefile, userfile, testfile):
 
 
 def main():
-	get_session(0.3)
 	data, movies, genders, ages, occupations = readfile(argv[3],argv[4],argv[1])
 	model = load_model('model/model.h5', custom_objects={'rmse': rmse})
 	userID = np.array(data[:,1],dtype=int)
