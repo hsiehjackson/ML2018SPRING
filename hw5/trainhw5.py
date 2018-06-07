@@ -78,7 +78,7 @@ def embedding_vector(data,model,tokenizer):
 					if word not in model:
 						embedding_vector.append([0]*256)
 					else:
-						embedding_vector.append(model.wv[word])
+						embedding_vector.append(model[word])
 		embedding_matrix.append(embedding_vector)
 
 	return embedding_matrix
@@ -123,7 +123,8 @@ def main():
 	#data_list = data_dic['train_data']
 	#w2v_model = Word2Vec(data_list, size=256, min_count=5,iter=16,workers=16)
 	#w2v_model.save(word2vec_save_path)
-	w2v_model = Word2Vec.load(word2vec_save_path)
+	#w2v_model = Word2Vec.load(word2vec_save_path)
+	w2v_model=pk.load(open('emb.pkl','rb'))
 
 	# convert to sequences
 	dm.to_sequence(max_length)

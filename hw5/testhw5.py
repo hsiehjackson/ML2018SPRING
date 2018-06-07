@@ -50,8 +50,9 @@ def embedding_vector(data,model,tokenizer):
 					embedding_vector.append([0]*256)
 				else:
 					word = dic[data[i][j]]
-					embedding_vector.append(model.wv[word])
+					embedding_vector.append(model[word])
 		embedding_matrix.append(embedding_vector)
+
 
 	return embedding_matrix
 
@@ -60,14 +61,14 @@ def readtestdata(path):
     data=[]
     with open(path) as f:
         for line in f:
-            temp=(line.strip().split(',',1))
-            data.append(temp[1])
+           temp=(line.strip().split(',',1))
+           data.append(temp[1])
     del data[0]
     return data		
 
 def main():
 
-	#K.set_session(get_session(0.9))
+	K.set_session(get_session(0.3))
 	#####read data#####
 	
 	print ('Loading data...')
@@ -75,7 +76,8 @@ def main():
 	#data = ['today is a good day but it is hot','today is hot but it is a good day']
 	print ('get Tokenizer...')
 	tokenizer=pk.load(open('token.pk','rb'))
-	w2v_model = Word2Vec.load('word2vec.h5')
+	#w2v_model = Word2Vec.load('word2vec.h5')
+	w2v_model=pk.load(open('emb.pkl','rb'))
 
 	#test_X=tokenizer.texts_to_matrix(data,mode='count')
 	test_X = tokenizer.texts_to_sequences(data)
@@ -84,8 +86,10 @@ def main():
 
 	#model=simpleRNN(vocab_size)
 	#print(model.summary())
+	print ('load...')
 	model = load_model(argv[3])
-	ans = model.predict(test_X,batch_size=1024,verbose=1)
+	print ('predict...')
+	ans = model.predict(test_X,batch_size=1200,verbose=1)
 	#print(ans[0])
 	#print(ans[1])
 
