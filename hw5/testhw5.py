@@ -68,7 +68,7 @@ def readtestdata(path):
 
 def main():
 
-	K.set_session(get_session(0.3))
+	#K.set_session(get_session(0.3))
 	#####read data#####
 	
 	print ('Loading data...')
