@@ -46,7 +46,7 @@ The script will execute the src/test.py file. Load the 4 npy model and output a 
 bash test.sh
 ```
 ### npy file generate execution
-> from "modelpaht".h5 file to generate .npy probability file
+> from "modelpath".h5 file to generate .npy probability file
 ```
 bash generate_npy.sh modelpath
 ```
