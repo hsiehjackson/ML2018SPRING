@@ -8,29 +8,9 @@ import keras.backend.tensorflow_backend as K
 import tensorflow as tf
 import pandas as pd
 
-'''
-def ensembleModels(models):
-    y_model = []
-    count = 0
-    for i in models:
-        model = load_model(i)
-        model.name = 'model_{}'.format(count)
-        y_model.append(model)
-        count += 1
-
-    model_input = Input(shape=y_model[0].input_shape[1:])
-    print(y_model[0].input_shape)
-
-    yModels=[model(model_input) for model in y_model]
-    yAvg=average(yModels)
-    modelEns = Model(inputs=model_input, outputs=yAvg, name='ensemble')
-    modelEns.save('ensemble.h5')
-    return modelEns
-'''
-
 
 dm = DataManager()
-dm.add_rawData('../data/sample_submission.csv', mode='test')
+dm.add_rawData('data/sample_submission.csv', mode='test')
 dm.preprocess()
 #dm.dump_data(test_spectrum_mic_ex_dir)
 X = np.array(([d.reshape(fre_bin, max_time, 1) for d in dm.get_data('test_data')[0]])) / -80.
@@ -74,16 +54,16 @@ models = (args.models.split(','))
 predc = 0
 for i in range(num_model):
     prob = test(models[i])
-    np.save('../testmodel/'+str(models[i])+'.npy',prob)
+    np.save('model/'+str(models[i])+'.npy',prob)
     predc  += prob
     #models.append(sys.argv[i+2])
-predc = predc / float(num_model)
+#predc = predc / float(num_model)
 #ensembleModels(models)
-top_3 = np.array(category)[np.argsort(-predc, axis=1)[:, :3]]
-predicted_labels = [' '.join(list(x)) for x in top_3]
+#top_3 = np.array(category)[np.argsort(-predc, axis=1)[:, :3]]
+#predicted_labels = [' '.join(list(x)) for x in top_3]
 #prd_class = y_prob.argmax(axis=-1)
 #print(prd_class)
-
+'''
 data = pd.read_csv('../data/sample_submission.csv').values
 
 for i, ele in enumerate(predicted_labels):
@@ -92,5 +72,5 @@ for i, ele in enumerate(predicted_labels):
 columns = ['fname', 'label']
 df = pd.DataFrame(data=data, columns=columns)
 df.to_csv(args.result_path, encoding='utf-8', index=False)
-
+'''
 
